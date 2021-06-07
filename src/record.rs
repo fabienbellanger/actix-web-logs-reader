@@ -38,10 +38,8 @@ fn format_level(level: &str) -> ColoredString {
         1 => level.to_string().blue().bold(),
         2 => level.to_string().green().bold(),
         3 => level.to_string().yellow().bold(),
-        4 => level.to_string().red().bold(),
         _ => level.to_string().red().bold(),
     }
-    
 }
 
 fn format_msg(msg: &str) -> String {
