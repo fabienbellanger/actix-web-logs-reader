@@ -1,7 +1,6 @@
 use chrono::{DateTime, SecondsFormat, Utc};
 use colored::Colorize;
 use serde::Deserialize;
-use colored::ColoredString;
 
 pub const LEVELS: [&str; 6] = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"];
 
@@ -32,14 +31,16 @@ impl LogRecord {
     }
 }
 
-fn format_level(level: &str) -> ColoredString {
+fn format_level(level: &str) -> String {
+    // Possibilité d'utiliser truecolor(u8,u8,u8)
     match LEVELS.iter().position(|&r| r == level).unwrap_or(0) {
         0 => level.to_string().purple().bold(),
         1 => level.to_string().blue().bold(),
         2 => level.to_string().green().bold(),
         3 => level.to_string().yellow().bold(),
-        _ => level.to_string().red().bold(),
-    }
+        4 => level.to_string().red().bold(),
+        _ => level.to_string().reversed().bold(),
+    }.to_string()
 }
 
 fn format_msg(msg: &str) -> String {
