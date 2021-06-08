@@ -1,6 +1,7 @@
 use crate::record::LogRecord;
 use std::io::BufRead;
 
+/// Process records from sdtin
 pub fn process_stdin(level_filter: String, strict: bool) {
     let stdin = std::io::stdin();
     for line in stdin.lock().lines() {
@@ -11,9 +12,9 @@ pub fn process_stdin(level_filter: String, strict: bool) {
                     print!("{}", r.format())
                 }
             }
-            Err(_) => {
+            Err(err) => {
                 if !strict {
-                    println!("{}", line)
+                    println!("line: {}", line)
                 }
             }
         }
