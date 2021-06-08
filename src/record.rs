@@ -91,7 +91,7 @@ impl<'a> LogRecord<'a> {
             format!(
                 "{} | {} | {} | {: >10}s | {} | {}",
                 access_log.format_status_code(),
-                access_log.request_path.reversed(),
+                access_log.request_path.reversed(), // TODO: Format request path
                 access_log.request_id,
                 access_log.elapsed_seconds,
                 access_log.client_ip_address,

@@ -12,7 +12,7 @@ pub fn process_stdin(level_filter: String, strict: bool) {
                     print!("{}", r.format())
                 }
             }
-            Err(err) => {
+            Err(_) => {
                 if !strict {
                     println!("line: {}", line)
                 }
