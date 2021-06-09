@@ -91,7 +91,7 @@ impl<'a> LogRecord<'a> {
             format!(
                 "{} | {} | {} | {: >10}s | {} | {}",
                 access_log.format_status_code(),
-                access_log.request_path.reversed(), // TODO: Format request path
+                access_log.format_request_path(),
                 access_log.request_id,
                 access_log.elapsed_seconds,
                 access_log.client_ip_address,
@@ -127,6 +127,42 @@ impl<'a> AccessLogRecord<'a> {
             c if c < 400 => c.to_string().purple().bold(),
             c if c < 500 => c.to_string().yellow().bold(),
             c if c < 600 => c.to_string().red().bold(),
+            _ => "".clear(),
+        }
+        .to_string()
+    }
+
+    /// Format HTTP request path
+    fn format_request_path(&self) -> String {
+        let mut parts = self.request_path.split(' ');
+        let http_method = parts.next().unwrap_or("");
+        let http_uri = parts.next().unwrap_or("");
+        let http_protocol = parts.next().unwrap_or("");
+
+        if http_method.is_empty() && http_uri.is_empty() && http_protocol.is_empty() {
+            self.request_path.to_string()
+        } else {
+            format!(
+                "{} | {} | {}",
+                Self::format_http_method(http_method),
+                http_uri,
+                http_protocol
+            )
+        }
+    }
+
+    /// Format HTTP method
+    fn format_http_method(method: &str) -> String {
+        match method {
+            "GET" => "    GET".green(),
+            "POST" => "   POST".blue(),
+            "PUT" => "    PUT".yellow(),
+            "PATCH" => "  PATCH".magenta(),
+            "DELETE" => " DELETE".red(),
+            "HEAD" => "   HEAD".clear(),
+            "CONNECT" => "CONNECT".clear(),
+            "OPTIONS" => "OPTIONS".clear(),
+            "TRACE" => "  TRACE".clear(),
             _ => "".clear(),
         }
         .to_string()
