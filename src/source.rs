@@ -14,7 +14,7 @@ pub fn process_stdin(level_filter: String, strict: bool) {
             }
             Err(_) => {
                 if !strict {
-                    println!("line: {}", line)
+                    println!("{}", line)
                 }
             }
         }
