@@ -1,8 +1,8 @@
 use actix_web_logs_reader::process_stdin;
-use clap::Clap;
+use clap::Parser;
 
 /// Filter and pretty-print Actix-web log file content.
-#[derive(Clap)]
+#[derive(Parser)]
 #[clap(version = "0.1", author = "Fabien Bellanger <valentil@gmail.com>")]
 struct Cli {
     /// Only show messages at or above the specified level.
